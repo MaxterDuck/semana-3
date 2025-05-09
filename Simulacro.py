@@ -1,79 +1,93 @@
-#Simulacro de Examen: Gestión de Inventario de una Librería en Python
+# Simulacro de Examen: Gestión de Inventario de una Librería en Python
 inventory = [
-    {"El principito ": "Book 1", "price": 20, "quantity": 100},
-    {"La vida es bella": "Book 2", "price": 15, "quantity": 50},
-    {"100 años de soledad": "Book 3", "price": 20, "quantity": 30},
-    {"Leopardos al sol": "Book 4", "price": 25, "quantity": 10},
-    {"La laguna azul": "Book 5", "price": 10, "quantity": 5}
+    {"name": "El principito", "price": 20, "quantity": 100},
+    {"name": "La vida es bella", "price": 15, "quantity": 50},
+    {"name": "100 años de soledad", "price": 20, "quantity": 30},
+    {"name": "Leopardos al sol", "price": 25, "quantity": 10},
+    {"name": "La laguna azul", "price": 10, "quantity": 5}
 ]
+
+# Enter numbers safely 
 def input_num(prompt, tipo=int):
     while True:
         entrada = input(prompt)
         try:
             return tipo(entrada)
         except ValueError:
-            print("Entrada no válida. Por favor ingresa un número valido.")
-#This function does register a new book 
-def add_books():
+            print("Invalid entry. Please enter a valid number.")
+
+# Add a new book
+def add_books(name, price, quantity):
     for book in inventory:
-        price = 0 
-        quantity = 0
-        name = input("Dame el nombre del libro: ")
-        price = input_num("Dame el precio del libro: ", int)
-        quantity = input_num("Dame la cantidad de libros: ", int)
-        if name in inventory:
-            print ("El libro ya existe en el inventario")
-        if price <= 0:                      
-            print ("Precio no valido. Ingresa un precio en numeros positivos")                                                                                                                                                                                                                          
-        if quantity<0:
-                print ("Precio no valido. Ingresa un precio en numeros positivos")
-        else:
-            print ("Precio registrado correctamente")
+        if book["name"].lower() == name.lower():  
+            print("The book already exists in the inventory.")
+            return
+    
+    
+    inventory.append({"name": name, "price": price, "quantity": quantity})
+    print(f"Book '{name}' successfully added with price ${price} and quantity {quantity}.")
+
+# Search books
+def search_books(name):
+    found = False
+    for book in inventory:
+        if book["name"].lower() == name.lower():  
+            print(f"The book is : {book['name']} | The price is: ${book['price']} | Quantity: {book['quantity']}")
+            found = True
+            break
+    
+    if not found:
+        print("Book not found. ")
+
+# Update the price 
+def update_price_books(name, new_price):
+    for book in inventory:
+        if book["name"].lower() == name.lower():
+            book["price"] = new_price
+            print(f"Price of the book'{name}' update to ${new_price}.")
+            return
+    
+    print("Product not found to update.")
+
+#Delete books in inventory 
+def del_books(name):
+    for book in inventory: 
+        if book ["name"].lower() == name.lower():
             
-        print (f"Libro añadido correctamente| Con el precio de:{price}| Con Cantidad de: {quantity} Libros")
 
-#This function does search a book
-def search_books(name,price,quantity):
-    book = inventory.__add__(name,price,quantity)
-    if book:
-        print(f"El libro es : {name} | El precio es de : ${price} | Cantidad: {quantity[1]}") 
-    else:
-        print("Libro  no encontrado.")
-
-#This function does update the pruce
-def update_price_books(name,new_price):
-    if name in inventory:
-        quantity = inventory[name]
-        inventory[name] = (new_price, quantity)
-        print(f" Precio del Libro'{name}' actualizado a ${new_price}.")
-    else:
-        print(" Producto no encontrado para actualizar.")
-        
-
-
-#Menu 
+# Options menu
 def menu():
     while True:
         print("\n--- MENU ---")
-        print("1. ADD Book")
-        print ("2. Search Books") 
-        print ("3.Update price Books")
-        option = input("Choose any option (1-3): ")
+        print("1. Add Book")
+        print("2. Search Book")
+        print("3. Update the price Books")
+        print("4. Leave")
+        
+        option = input("Choose the options (1-4): ")
 
         if option == "1":
-            name = input(str("Darme el titulo de el libro: "))
-            price = input (int("Dame el precio de el libro: "))
-            quantity = input (int("Dame la cantidad que deseas registrar: "))
-
-            add_books()
+            name = input("Give me the title of the book: ").strip()
+            price = input_num("Give me the price of the book: ", int)
+            quantity = input_num("Give me the number of books: ", int)
+            add_books(name, price, quantity)
+        
         elif option == "2":
-            name = input("Libro a buscar: ")
+            name = input("Name of the book to search for: ").strip()
             search_books(name)
+        
         elif option == "3":
-            name = input("Nombre del libro a actualizar: ").strip()
+            name = input("Name of the book to be updated: ").strip()
             new_price = input_num("Nuevo precio: ", int)
             update_price_books(name, new_price)
         
+        elif option == "4":
+            print("Saliendo del programa...")
+            break
+        
+        else:
+            print("Opción no válida. Por favor, elige una opción entre 1 y 4.")
 
 if __name__ == "__main__":
-        menu()
+    menu()
+
