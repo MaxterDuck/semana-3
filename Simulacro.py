@@ -50,10 +50,13 @@ def update_price_books(name, new_price):
     print("Product not found to update.")
 
 #Delete books in inventory 
-def del_books(name):
-    for book in inventory: 
-        if book ["name"].lower() == name.lower():
-            
+def del_books(book):
+    if book in inventory: 
+        del inventory[book]
+        print ("The Book {book} was removed from inventory")
+    else:
+        print ("Book not found")
+
 
 # Options menu
 def menu():
@@ -62,9 +65,10 @@ def menu():
         print("1. Add Book")
         print("2. Search Book")
         print("3. Update the price Books")
-        print("4. Leave")
+        print("4. Delete a book ")
+        print("6. Leave")
         
-        option = input("Choose the options (1-4): ")
+        option = input("Choose the options (1-6): ")
 
         if option == "1":
             name = input("Give me the title of the book: ").strip()
@@ -82,12 +86,18 @@ def menu():
             update_price_books(name, new_price)
         
         elif option == "4":
-            print("Saliendo del programa...")
+            name = input("Name of the book to delete: ").strip()
+            print ("The book was deleted")
+
+        elif option == "6":
+            print("Leaving the program...")
             break
         
         else:
-            print("Opción no válida. Por favor, elige una opción entre 1 y 4.")
+            print("Invalid option. Please choose an option between 1 and 6.")
 
 if __name__ == "__main__":
     menu()
+
+
 
