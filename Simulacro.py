@@ -1,5 +1,4 @@
 # Simulacro de Examen: Gestión de Inventario de una Librería en Python
-# Simulacro de Examen: Gestión de Inventario de una Librería en Python
 inventory = [
     {"name": "El principito", "price": 20, "quantity": 100},
     {"name": "La vida es bella", "price": 15, "quantity": 50},
